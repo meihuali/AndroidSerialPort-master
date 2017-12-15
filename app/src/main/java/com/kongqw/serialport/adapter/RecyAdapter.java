@@ -44,8 +44,8 @@ public class RecyAdapter extends RecyclerView.Adapter<RecyAdapter.ViewHolder> im
         int newPos=position%datas.size();
 
         holder.img.setImageResource(datas.get(newPos));
-
-        holder.itemView.setTag(position);
+        //取余数来获取下标 回调出给activity
+        holder.itemView.setTag(position % datas.size());
 
 
     }

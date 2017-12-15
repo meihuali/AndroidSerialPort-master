@@ -57,7 +57,7 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // horizontal();
+        // horizontal();
         setContentView(R.layout.activity_serial_port);
         openSerialPort();
         initView();
@@ -88,19 +88,35 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
         public void run() {
             // scrollBy 让item 滚动起来
             recyclerview.scrollBy(3,0);
+
             //获取当前列表的第一个item位置
             int firstItem=layoutManager.findFirstVisibleItemPosition();
             if(firstItem!=oldItem&&firstItem>0){
                 oldItem=firstItem;
-                img.setImageResource(datas.get(oldItem%datas.size()));
+                img.setImageResource(datas.get(oldItem % datas.size()));
             }
 
             Log.e(TAG, "run: firstItem:"+firstItem );
 
 
-            mHandler.postDelayed(scrollRunnable,1000);
+            mHandler.postDelayed(scrollRunnable,10);
         }
     };
+    /**
+     * 创建者 ：华黎
+     * 创建时间： 2017/12/15 18:01
+     * 描述：点击item 去设置图片给上面的大图
+     */
+    @Override
+    public void onItemClick(View view, int tag) {
+
+        Toast.makeText(this,"第"+tag+"张图片被点击了",Toast.LENGTH_SHORT).show();
+        if (tag < datas.size()) {
+            img.setImageResource(Integer.parseInt(String.valueOf(datas.get(tag))));
+        }
+
+
+    }
 
 
     /**
@@ -228,11 +244,11 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
     public void onFail(File device, Status status) {
         switch (status) {
             case NO_READ_WRITE_PERMISSION:
-               // showDialog(device.getPath(), "没有读写权限"); 暂时注释掉
+                // showDialog(device.getPath(), "没有读写权限"); 暂时注释掉
                 break;
             case OPEN_FAIL:
             default:
-             //  showDialog(device.getPath(), "串口打开失败"); //暂时注释
+                //  showDialog(device.getPath(), "串口打开失败"); //暂时注释
                 break;
         }
     }
@@ -281,10 +297,7 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
 //        showToast(sendBytes ? "发送成功" : "发送失败");
     }
 
-    @Override
-    public void onItemClick(View view, int tag) {
-        Toast.makeText(this,"第"+tag+"张图片被点击了",Toast.LENGTH_SHORT).show();
-    }
+
 
 
     /**
