@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">串口通信</string>
+    <string name="text_body">关于本月的积分兑换公告，本月兑换是1点等于1积分</string>
+    <string name="yuer">余额</string>
+    <string name="jiner">33.00</string>
+    <string name="jifen">积分</string>
+    <string name="jifenshu">1888</string>
+    <string name="chongzhi">充值</string>
+    <string name="duihuanliping">兑换礼品</string>
+    <string name="wendu">温度：</string>
+    <string name="wendushuju">60℃</string>
+    <string name="yongshuiliang">用水量：</string>
+    <string name="shuiliang">33L</string>
+    <string name="shuizhi">水质：</string>
+    <string name="shijian">01天：12时：36分</string>
+
+
+</resources>

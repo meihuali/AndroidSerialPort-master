@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--以下是自定义颜色-->
+    <color name="huise">#f0f0f0</color>
+    <color name="baise">#ffffff</color>
+    <color name="huiheiseziti">#676767</color>
+    <color name="lvseziti">#02B8BB</color>
+    <color name="hongse">#ff224a</color>
+    <color name="qianhuise">#CCCC</color>
+</resources>
