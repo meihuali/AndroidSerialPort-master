@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/click_to_dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/popup_bg"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        >
+        <RelativeLayout
+            android:id="@+id/popup_anima"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:background="@drawable/button_yuanjiao_baiseda"
+                android:layout_width="300dp"
+                android:layout_height="300dp">
+                <ImageView
+                    android:id="@+id/img_close"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/guanbi"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp" />
+            </RelativeLayout>
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/lingdang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="20sp"
+                    android:textColor="@color/txt_main"
+                    android:gravity="center"
+                    android:text="@string/tongzhi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="48dp"
+                    android:textSize="17sp"
+                    android:layout_marginRight="70dp"
+                    android:layout_marginLeft="70dp"
+                    android:textColor="@color/jifenwenzi"
+                    android:text="@string/jifenbody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btn_close"
+                    android:layout_marginTop="33dp"
+                    android:textColor="@color/lvseziti"
+                    android:text="@string/zhidaole"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/button_yuanjiaokongxin_lanse"
+                    android:layout_width="111dp"
+                    android:layout_height="35dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

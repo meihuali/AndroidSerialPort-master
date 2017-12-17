@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/click_to_dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/popup_bg"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        >
+        <RelativeLayout
+            android:id="@+id/popup_anima"
+            android:layout_width="550dp"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:background="@drawable/button_yuanjiao_baiseda"
+                android:layout_width="match_parent"
+                android:layout_height="360dp">
+                <ImageView
+                    android:id="@+id/img_close"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/guanbi"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp" />
+            </RelativeLayout>
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/duihuanliping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/txt_main"
+                    android:gravity="center"
+                    android:text="@string/duihuan"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/mRecyclerView"
+                        android:layout_marginTop="25dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
+
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

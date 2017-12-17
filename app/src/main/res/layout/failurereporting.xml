@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/click_to_dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/popup_bg"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        >
+        <RelativeLayout
+            android:id="@+id/popup_anima"
+            android:layout_width="550dp"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:background="@drawable/button_yuanjiao_baiseda"
+                android:layout_width="match_parent"
+                android:layout_height="360dp">
+                <ImageView
+                    android:id="@+id/img_close"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/guanbi"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp" />
+            </RelativeLayout>
+            <ImageView
+                android:layout_marginTop="3dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/baoxiu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textSize="30sp"
+                    android:textColor="@color/txt_main"
+                    android:gravity="center"
+                    android:text="@string/guzhangbaoxiu"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:textColor="@color/qianheise"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="@string/haoma"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <TextView
+                        android:textColor="@color/txt_main"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="50dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/xiangxi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:textColor="@color/lvseziti"
+                        android:text="@string/chulizhuangtai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                    </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <TextView
+                        android:textColor="@color/txt_main"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="50dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/xiangxi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:textColor="@color/lvseziti"
+                        android:text="@string/chulizhuangtai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                    </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <TextView
+                        android:textColor="@color/txt_main"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="50dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/xiangxi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:textColor="@color/lvseziti"
+                        android:text="@string/chulizhuangtai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <EditText
+                        android:layout_marginLeft="50dp"
+                        android:hint="     请输入您的问题"
+                        android:background="@drawable/button_yuanjiao_huiseyuanjiao"
+                        android:layout_width="330dp"
+                        android:layout_height="match_parent" />
+                    <Button
+                        android:layout_marginLeft="35dp"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:text="@string/tijiao"
+                        android:background="@drawable/button_yuanjiao_lanse"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

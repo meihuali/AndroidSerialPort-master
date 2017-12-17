@@ -13,6 +13,28 @@
     <string name="shuiliang">33L</string>
     <string name="shuizhi">水质：</string>
     <string name="shijian">01天：12时：36分</string>
+    <string name="guzhangbaoxiu">故障报修</string>
+    <string name="yongshuikaiguan">用水开关</string>
+    <string name="tongzhi">通知</string>
+    <string name="jifenbody">关于本月积分兑换公告，本月积分兑换是1点等于1积分</string>
+    <string name="zhidaole">知道了</string>
+    <string name="jinerwushi">50</string>
+    <string name="yibaiyuan">100</string>
+    <string name="erbaiyuan">200</string>
+    <string name="weixin">微信</string>
+    <string name="zhifubao">支付宝</string>
+    <string name="duihuan">兑换礼品</string>
+    <string name="taochimakebei">陶瓷马克杯</string>
+    <string name="jifenshuliang">600积分</string>
+    <string name="duihuanwenzi">兑换</string>
+    <string name="haoma">020-94955694</string>
+    <string name="xiangxi">留言：机器故障，请尽快安排检修人员处理！</string>
+    <string name="chulizhuangtai">（正在处理中）</string>
+    <string name="tijiao">提交</string>
+    <string name="xuanzshuiwen">选择水温</string>
+    <string name="wendushuiju">30℃</string>
+    <string name="liushi">60℃</string>
+    <string name="jiushi">90℃</string>
 
 
 </resources>

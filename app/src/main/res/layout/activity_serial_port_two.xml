@@ -8,30 +8,31 @@
     tools:context="com.kongqw.serialport.ui.SerialPortActivity">
     <!--左边整体布局-->
     <LinearLayout
-        android:layout_width="235px"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="360dp"
+        android:layout_weight="0.3"
         android:background="@color/huise"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_marginTop="10px"
-            android:layout_width="97px"
-            android:layout_height="26px"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/logo" />
 
         <FrameLayout
             android:id="@+id/fl_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             >
             <RelativeLayout
-                android:layout_marginTop="43dp"
+                android:layout_marginTop="23dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/button_yuanjiao_baise"
-                android:layout_width="213px"
-                android:layout_height="110px">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -43,31 +44,18 @@
                     android:textColor="@color/lvseziti" />
 
             </RelativeLayout>
-
             <ImageView
-                android:layout_marginTop="18px"
                 android:layout_width="47px"
                 android:layout_height="47px"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/tongzhi" />
-            <Button
-                android:id="@+id/btn_exit"
-                android:text="退出APP"
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp" />
-
         </FrameLayout>
-
-
-
-
         <LinearLayout
-            android:layout_width="213px"
-            android:layout_height="61px"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="12px"
+            android:layout_marginTop="8dp"
             android:background="@drawable/button_yuanjiao_baise"
             android:orientation="horizontal">
 
@@ -130,29 +118,29 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="15dp"
-            android:layout_width="213px"
-            android:layout_height="45px"
-            android:layout_marginTop="11px"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <Button
-                android:layout_marginRight="7px"
                 android:id="@+id/Recharg_jiner"
                 android:textColor="@color/baise"
                 android:text="@string/chongzhi"
                 android:layout_width="0dp"
-                android:layout_height="43px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_yuanjiao_lanse"
                 />
             <Button
-                android:layout_marginLeft="7px"
                 android:id="@+id/btn_duihuan"
                 android:textColor="@color/baise"
                 android:text="@string/duihuanliping"
                 android:layout_width="0dp"
-                android:layout_height="43px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="17dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_yuanjiao_lanse"
                 />
@@ -162,22 +150,22 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="213px"
-            android:layout_height="44px"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="11px"
+            android:layout_marginTop="8dp"
             android:background="@drawable/button_yuanjiao_baise">
 
             <ImageView
                 android:layout_width="21px"
                 android:layout_height="21px"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="11px"
+                android:layout_marginLeft="6dp"
                 android:src="@drawable/wenduji" />
 
             <LinearLayout
-                android:layout_marginLeft="30px"
+                android:layout_marginLeft="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -203,18 +191,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="213px"
-            android:layout_height="44px"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="11px"
+            android:layout_marginTop="8dp"
             android:background="@drawable/button_yuanjiao_baise">
 
             <ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_width="21px"
                 android:layout_height="30dp"
-                android:layout_marginLeft="11px"
+                android:layout_marginLeft="6dp"
                 android:src="@drawable/shuiliang" />
 
             <LinearLayout
@@ -243,18 +231,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="213px"
-            android:layout_height="44px"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="11px"
+            android:layout_marginTop="8dp"
             android:background="@drawable/button_yuanjiao_baise">
 
             <ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_width="21px"
                 android:layout_height="21px"
-                android:layout_marginLeft="11px"
+                android:layout_marginLeft="6dp"
                 android:src="@drawable/shuizhi" />
 
             <LinearLayout
@@ -284,18 +272,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="213px"
-            android:layout_height="44px"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="11px"
+            android:layout_marginTop="8dp"
             android:background="@drawable/button_yuanjiao_baise">
 
             <ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_width="21px"
                 android:layout_height="21px"
-                android:layout_marginLeft="11px"
+                android:layout_marginLeft="6dp"
                 android:src="@drawable/shijian" />
 
             <LinearLayout
@@ -315,28 +303,29 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="15dp"
-            android:layout_width="213px"
-            android:layout_height="45px"
-            android:layout_marginTop="12px"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
+
             <Button
-                android:layout_marginRight="7px"
                 android:id="@+id/btn_guzhangbaoxiu"
                 android:textColor="@color/baise"
                 android:text="@string/guzhangbaoxiu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_yuanjiao_lanse"
                 />
             <Button
-                android:layout_marginLeft="7px"
                 android:id="@+id/kaiguan"
                 android:textColor="@color/baise"
                 android:text="@string/yongshuikaiguan"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="17dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_yuanjiao_lanse"
                 />
@@ -346,7 +335,6 @@
 
     <!--右边整体布局-->
     <LinearLayout
-        android:layout_marginLeft="15px"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -366,6 +354,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1">

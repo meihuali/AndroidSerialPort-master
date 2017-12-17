@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kongqw.serialport.SelectSerialPortActivity">
+    tools:context="com.kongqw.serialport.ui.SelectSerialPortActivity">
 
     <ListView
         android:id="@+id/lv_devices"
@@ -15,8 +15,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="没有可用串口"
+        android:text="点击进去主界面"
         android:textColor="#FF000000"
         android:textSize="30sp" />
+    <Button
+        android:textSize="18sp"
+        android:text="点击退出APP程序"
+        android:id="@+id/btn_exit"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/tv_empty"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp" />
 
 </RelativeLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/click_to_dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/popup_bg"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        >
+        <RelativeLayout
+            android:id="@+id/popup_anima"
+            android:layout_width="470dp"
+            android:layout_height="350dp"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:background="@drawable/button_yuanjiao_baiseda"
+                android:layout_width="match_parent"
+                android:layout_height="320dp">
+                <ImageView
+                    android:id="@+id/img_close"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/guanbi"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp" />
+            </RelativeLayout>
+            <ImageView
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/chongzhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/jiaerweima"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+                    <TextView
+                        android:id="@+id/tv_wushi"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:background="@drawable/button_yuanjiao_lanse"
+                        android:textColor="@color/white"
+                        android:text="@string/jinerwushi"
+                        android:layout_marginLeft="70dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:id="@+id/tv_yibai"
+                        android:gravity="center"
+                        android:textColor="@color/lvseziti"
+                        android:text="@string/yibaiyuan"
+                        android:background="@drawable/button_yuanjiaokongxin_lanse"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:id="@+id/liangbai"
+                        android:textColor="@color/lvseziti"
+                        android:text="@string/erbaiyuan"
+                        android:gravity="center"
+                        android:background="@drawable/button_yuanjiaokongxin_lanse"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="70dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.8"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <TextView
+                        android:id="@+id/tv_weixin"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="100dp"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/lvseziti"
+                        android:text="@string/weixin"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/button_yuanjiaokongxin_lanse"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:id="@+id/tv_zhifubao"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="100dp"
+                        android:gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/lvseziti"
+                        android:text="@string/zhifubao"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/button_yuanjiaokongxin_lanse"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

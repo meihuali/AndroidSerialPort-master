@@ -3,14 +3,14 @@
     package="com.kongqw.serialport">
 
     <application
-        android:name=".InitApplication"
+        android:name=".appliction.InitApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SelectSerialPortActivity">
+        <activity android:name=".ui.SelectSerialPortActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,7 @@
 
         </activity>
         <!--这个activity 是显示所有串口设备列表的·这里暂时先注释掉-->
-        <activity android:name=".SerialPortActivity" />
+        <activity android:name=".ui.SerialPortActivity" />
     </application>
 
 </manifest>

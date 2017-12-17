@@ -25,7 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile project(':SerialPortLibrary')
+  //  compile project(':SerialPortLibrary')
 
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:23.4.0'
@@ -34,4 +34,12 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     compile 'com.android.support:recyclerview-v7:23.0.0'
+    //串口通讯依赖
+    compile 'com.github.kongqw:AndroidSerialPort:1.0.1'
+    //popupwindow 依赖
+    compile 'com.github.razerdp:BasePopup:1.8.8'
+    //适配器
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //switch 开关
+    compile 'com.github.zcweng:switch-button:0.0.3@aar'
 }
