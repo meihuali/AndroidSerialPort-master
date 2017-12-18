@@ -2,6 +2,7 @@ package com.kongqw.serialport.ui;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,8 +29,11 @@ public class SelectSerialPortActivity extends AppCompatActivity implements Adapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  horizontal();
+          horizontal();
         setContentView(R.layout.activity_select_serial_port);
+
+
+
 
         tv_empty = (TextView) findViewById(R.id.tv_empty);
         tv_empty.setOnClickListener(this);
@@ -70,6 +74,7 @@ public class SelectSerialPortActivity extends AppCompatActivity implements Adapt
      * 创建时间：2017/12/12 10:44
      * 描述：横屏全屏
      */
+
     private void horizontal() {
         //去除标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -79,6 +84,13 @@ public class SelectSerialPortActivity extends AppCompatActivity implements Adapt
         //设置横竖屏(landscape:横屏---portrait:竖屏)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
+
     }
 
 
@@ -93,4 +105,6 @@ public class SelectSerialPortActivity extends AppCompatActivity implements Adapt
                     break;
         }
     }
+
+
 }

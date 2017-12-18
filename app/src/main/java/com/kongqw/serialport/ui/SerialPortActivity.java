@@ -240,7 +240,7 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
         //设置横竖屏(landscape:横屏---portrait:竖屏)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        //隐藏底部导航栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -389,9 +389,9 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
                 WaterSwitchPop waterSwitchPop = new WaterSwitchPop(this);
                 waterSwitchPop.showPopupWindow();
                 break;
-                case R.id.btn_exit:
-                    System.exit(0);
-                    break;
+            case R.id.btn_exit:
+                System.exit(0);
+                break;
 
 
 
