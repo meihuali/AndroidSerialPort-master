@@ -1,7 +1,11 @@
 package com.kongqw.serialport.ui;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
@@ -11,16 +15,24 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.kongqw.serialport.R;
 import com.kongqw.serialport.adapter.RecyAdapter;
+import com.kongqw.serialport.adapter.UltraPagerAdapter;
 import com.kongqw.serialport.popupwindow.ExchangeGiftPop;
 import com.kongqw.serialport.popupwindow.FailureReportingPop;
 import com.kongqw.serialport.popupwindow.NotionftionPop;
@@ -30,6 +42,7 @@ import com.kongqw.serialportlibrary.listener.OnOpenSerialPortListener;
 import com.kongqw.serialportlibrary.listener.OnSerialPortDataListener;
 import com.kongqw.serialportlibrary.Device;
 import com.kongqw.serialportlibrary.SerialPortManager;
+import com.tmall.ultraviewpager.UltraViewPager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,6 +80,9 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
     private Button btn_guzhangbaoxiu;
     private Button kaiguan;
     private Button btn_exit;
+    private LinearLayout protLinear;
+    UltraViewPager ultraViewPager;
+    private PopupWindow popScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +92,42 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
         openSerialPort();
         initView();
         initData();
+        initViewPager();
         initRecy();
         //程序进来设置下标为0的集合中的图片
-        img.setImageResource(datas.get(0));
+      //  img.setImageResource(datas.get(0));
         recyAdapter.setOnItemClickListener(this);
+    }
+
+    private void initViewPager() {
+        ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
+//UltraPagerAdapter 绑定子view到UltraViewPager
+        UltraPagerAdapter adapter = new UltraPagerAdapter(datas);
+        ultraViewPager.setAdapter(adapter);
+        adapter.setOnPagerListener(new UltraPagerAdapter.OnViewPagerCallback() {
+            @Override
+            public void onPageViewColcik(int position) {
+                Toast.makeText(getApplicationContext(),"给老子出来曹尼玛的 "+position,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+/*//内置indicator初始化
+        ultraViewPager.initIndicator();
+//设置indicator样式
+        ultraViewPager.getIndicator()
+                .setOrientation(UltraViewPager.Orientation.HORIZONTAL)
+                .setFocusColor(Color.GREEN)
+                .setNormalColor(Color.WHITE)
+                .setRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
+//设置indicator对齐方式
+        ultraViewPager.getIndicator().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+//构造indicator,绑定到UltraViewPager
+        ultraViewPager.getIndicator().build();*/
+
+//设定页面循环播放
+        ultraViewPager.setInfiniteLoop(true);
+//设定页面自动切换  间隔2秒
+        ultraViewPager.setAutoScroll(5000);
     }
 
 
@@ -89,6 +137,8 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
      * 描述：初始化控件
      */
     private void initView() {
+        protLinear = (LinearLayout) findViewById(R.id.protLinear);
+        ultraViewPager = (UltraViewPager) findViewById(R.id.ultra_viewpager);
         img = (ImageView) findViewById(R.id.img);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         fl_layout = (FrameLayout) findViewById(R.id.fl_layout);
@@ -120,7 +170,7 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
             int firstItem=layoutManager.findFirstVisibleItemPosition();
             if(firstItem!=oldItem&&firstItem>0){
                 oldItem=firstItem;
-                img.setImageResource(datas.get(oldItem % datas.size()));
+               // img.setImageResource(datas.get(oldItem % datas.size()));
             }
 
             Log.e(TAG, "run: firstItem:"+firstItem );
@@ -138,9 +188,7 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
     public void onItemClick(View view, int tag) {
 
         Toast.makeText(this,"第"+tag+"张图片被点击了",Toast.LENGTH_SHORT).show();
-        if (tag < datas.size()) {
-            img.setImageResource(Integer.parseInt(String.valueOf(datas.get(tag))));
-        }
+        ultraViewPager.setCurrentItem((tag % datas.size()));
 
 
     }
@@ -381,8 +429,28 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
                 break;
             //故障报修
             case R.id.btn_guzhangbaoxiu:
-                FailureReportingPop failureReportingPop = new FailureReportingPop(this);
-                failureReportingPop.showPopupWindow();
+                View view = LayoutInflater.from(this).inflate( R.layout.failurereporting, null);
+                popScreen = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
+                popScreen.setOutsideTouchable(true);
+                //这句是为了防止弹出菜单获取焦点之后，点击activity的其他组件没有响应
+                popScreen.setBackgroundDrawable(new BitmapDrawable());
+                popScreen.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.pop)));//
+                //设置可以获取焦点，否则弹出菜单中的EditText是无法获取输入的
+                popScreen.setFocusable(true);
+                //这句是为了防止弹出菜单获取焦点之后，点击activity的其他组件没有响应
+                popScreen.setBackgroundDrawable(new BitmapDrawable());
+                //防止虚拟软键盘被弹出菜单遮住
+                popScreen.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                //设置显示位子
+                popScreen.showAtLocation(protLinear,Gravity.CENTER, 0, 0);
+
+                ImageView imgs = (ImageView) view.findViewById(R.id.img_close);
+                imgs.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popScreen.dismiss();
+                    }
+                });
                 break;
             //用水开关
             case R.id.kaiguan:

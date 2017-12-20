@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--以下是自定义颜色-->
+    <color name="pop">#202b2a2a</color>
+
     <color name="huise">#f0f0f0</color>
     <color name="baise">#ffffff</color>
     <color name="huiheiseziti">#676767</color>
