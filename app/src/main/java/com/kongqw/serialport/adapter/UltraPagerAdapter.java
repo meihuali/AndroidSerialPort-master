@@ -1,13 +1,22 @@
 package com.kongqw.serialport.adapter;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.kongqw.serialport.ConfigUtils.ZhuZhanIp;
 import com.kongqw.serialport.R;
+import com.kongqw.serialport.entivity.DownloadImageBean;
+import com.kongqw.serialport.entivity.GetImageViewBean;
+import com.kongqw.serialport.utils.ImgZhuanHuan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +28,13 @@ import java.util.List;
 
 public class UltraPagerAdapter extends PagerAdapter {
 
-    private List<Integer> datas = new ArrayList<>();
+    private List<DownloadImageBean> datas = new ArrayList<>();
+    private Context context;
+    private Drawable drawable;
 
-    public UltraPagerAdapter(List<Integer> datas) {
+    public UltraPagerAdapter(List<DownloadImageBean> datas, Context context) {
         this.datas = datas;
+        this.context = context;
     }
 
 /*****************************************************************/
@@ -55,10 +67,19 @@ public class UltraPagerAdapter extends PagerAdapter {
         View linearLayout = (LinearLayout) LayoutInflater.from(container.getContext()).inflate(R.layout.layout_child, null);
         //new LinearLayout(container.getContext());
         ImageView imageView = (ImageView) linearLayout.findViewById(R.id.img);
-        imageView.setImageResource(datas.get(position));
+        String url = datas.get(position).getAddurl();
+        //将图片string字符串 转成Drawable
+        drawable = ImgZhuanHuan.byteToDrawable(url);
+        imageView.setBackground(drawable);
+ /*       String url = ZhuZhanIp.imageurl+datas.get(position).getAdUrl();
+        //加载网络图片
+        if (!TextUtils.isEmpty(url)) {
+            if (url.contains(".png") || url.contains(".jpg")) {
+                Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().centerCrop().error(R.drawable.chongzhi).into(imageView);
+            }
+        }*/
         container.addView(linearLayout);
         //把当前被点击的下标回调出去给activity
-
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

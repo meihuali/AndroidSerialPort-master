@@ -1,13 +1,22 @@
 package com.kongqw.serialport.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.kongqw.serialport.ConfigUtils.ZhuZhanIp;
 import com.kongqw.serialport.R;
+import com.kongqw.serialport.entivity.DownloadImageBean;
+import com.kongqw.serialport.entivity.GetImageViewBean;
+import com.kongqw.serialport.utils.ImgZhuanHuan;
+import com.kongqw.serialport.utils.L;
 
 import java.util.List;
 
@@ -22,10 +31,11 @@ import java.util.List;
 public class RecyAdapter extends RecyclerView.Adapter<RecyAdapter.ViewHolder> implements View.OnClickListener {
 
     private Context context;
-    private List<Integer> datas;
+    private List<DownloadImageBean> datas;
     private OnItemClickListener onItemClickListener;
+    private Drawable drawable;
 
-    public RecyAdapter(Context context, List<Integer> datas) {
+    public RecyAdapter(Context context, List<DownloadImageBean> datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -41,11 +51,27 @@ public class RecyAdapter extends RecyclerView.Adapter<RecyAdapter.ViewHolder> im
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int newPos=position%datas.size();
 
-        holder.img.setImageResource(datas.get(newPos));
-        //取余数来获取下标 回调出给activity
-        holder.itemView.setTag(position % datas.size());
+        if (position < datas.size()) {
+            String url = datas.get(position).getAddurl();
+            //将图片string字符串 转成Drawable
+            drawable = ImgZhuanHuan.byteToDrawable(url);
+            holder.img.setBackground(drawable);
+        /*    if (!TextUtils.isEmpty(url)) {
+                if (url.contains(".png") || url.contains(".jpg")) {
+                    String urls = ZhuZhanIp.imageurl + url;
+                    Glide.with(context).load(urls).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().centerCrop().error(R.drawable.chongzhi).into(holder.img);
+                }
+            }*/
+
+           // int newPos = position % datas.size();
+            //  holder.img.setImageResource(datas.get(newPos));
+            //  取余数来获取下标 回调出给activity
+            holder.itemView.setTag(position);
+        }
+
+
+
 
 
     }
@@ -58,7 +84,10 @@ public class RecyAdapter extends RecyclerView.Adapter<RecyAdapter.ViewHolder> im
     @Override
     public void onClick(View view) {
         if(onItemClickListener!=null){
-            onItemClickListener.onItemClick(view, (Integer) view.getTag());
+            if ( (Integer) view.getTag() != null) {
+                onItemClickListener.onItemClick(view, (Integer) view.getTag());
+            }
+
         }
     }
 

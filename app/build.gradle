@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 25
     buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId "com.kongqw.serialport"
@@ -28,12 +28,12 @@ dependencies {
   //  compile project(':SerialPortLibrary')
 
     //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
     //串口通讯依赖
     compile 'com.github.kongqw:AndroidSerialPort:1.0.1'
     //popupwindow 依赖
@@ -46,4 +46,13 @@ dependencies {
     compile ('com.alibaba.android:ultraviewpager:1.0.6.1@aar') {
         transitive = true
     }
+    //网络请求库
+    compile 'com.lzy.net:okgo:3.0.4'
+
+    compile 'com.google.code.gson:gson:2.8.0'
+
+    //图片加载框架 Glider
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    compile 'com.youth.banner:banner:1.4.10'
 }

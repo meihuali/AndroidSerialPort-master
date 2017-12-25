@@ -353,6 +353,15 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <com.youth.banner.Banner
+            android:visibility="gone"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/banner"
+            android:layout_marginTop="10px"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="420px" />
+
         <com.tmall.ultraviewpager.UltraViewPager
             android:id="@+id/ultra_viewpager"
             android:layout_width="match_parent"
@@ -361,6 +370,9 @@
             android:layout_marginRight="10dp"
             />
 
+
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
@@ -368,7 +380,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            >
 
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
