@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kongqw.serialport.R;
@@ -25,9 +26,13 @@ public class NotionftionPop extends BasePopupWindow implements View.OnClickListe
 
     private View popupView;
     private Activity activity;
-    public NotionftionPop(Activity context) {
+    private String MyNotice;
+    private TextView tv_notionf;
+
+    public NotionftionPop(Activity context,String MyNotice) {
         super(context);
         this.activity = context;
+        this.MyNotice = MyNotice;
         bindEvent();
     }
 
@@ -62,6 +67,9 @@ public class NotionftionPop extends BasePopupWindow implements View.OnClickListe
         if (popupView != null) {
             popupView.findViewById(R.id.img_close).setOnClickListener(this);
             popupView.findViewById(R.id.btn_close).setOnClickListener(this);
+             tv_notionf= (TextView) popupView.findViewById(R.id.tv_nottifo_body);
+             tv_notionf.setText(MyNotice);
+
         }
 
     }

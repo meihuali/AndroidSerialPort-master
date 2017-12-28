@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableWrapper;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,32 +37,54 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.kongqw.serialport.ConfigUtils.ZhuZhanIp;
+import com.kongqw.serialport.Perenset.DelteJiefnPersent;
 import com.kongqw.serialport.Perenset.DeltePerenst;
+import com.kongqw.serialport.Perenset.GetFaluiatListPerenset;
 import com.kongqw.serialport.Perenset.GetImagePerenset;
 import com.kongqw.serialport.Perenset.HearBeatPerenset;
+import com.kongqw.serialport.Perenset.MyExchangePerenset;
+import com.kongqw.serialport.Perenset.UserRepairPerenset;
 import com.kongqw.serialport.R;
 import com.kongqw.serialport.View.DeleteImageView;
+import com.kongqw.serialport.View.DelteJiFenView;
+import com.kongqw.serialport.View.GetFaluiatListView;
 import com.kongqw.serialport.View.GetImageView;
 import com.kongqw.serialport.View.HearBeatView;
+import com.kongqw.serialport.View.MyexchangeView;
+import com.kongqw.serialport.View.ShangpinduihuanView;
+import com.kongqw.serialport.View.UserRepairView;
+import com.kongqw.serialport.adapter.FaultListAdapter;
 import com.kongqw.serialport.adapter.RecyAdapter;
 import com.kongqw.serialport.adapter.UltraPagerAdapter;
 import com.kongqw.serialport.entivity.DownloadImageBean;
+import com.kongqw.serialport.entivity.DuihuanBean;
+import com.kongqw.serialport.entivity.FaultListBean;
 import com.kongqw.serialport.entivity.GetImageViewBean;
+import com.kongqw.serialport.entivity.GetUserFailuatListBean;
 import com.kongqw.serialport.entivity.HeartBeatBean;
+import com.kongqw.serialport.entivity.MyExchangeBean;
+import com.kongqw.serialport.entivity.UserRepairBean;
 import com.kongqw.serialport.popupwindow.ExchangeGiftPop;
 import com.kongqw.serialport.popupwindow.NotionftionPop;
 import com.kongqw.serialport.popupwindow.RechargePop;
 import com.kongqw.serialport.popupwindow.WaterSwitchPop;
+import com.kongqw.serialport.utils.GliderImagsLoader;
 import com.kongqw.serialport.utils.ImgZhuanHuan;
 import com.kongqw.serialport.utils.L;
+import com.kongqw.serialport.utils.MyDialog;
 import com.kongqw.serialport.utils.SaveSpList;
 import com.kongqw.serialportlibrary.listener.OnOpenSerialPortListener;
 import com.kongqw.serialportlibrary.listener.OnSerialPortDataListener;
 import com.kongqw.serialportlibrary.Device;
 import com.kongqw.serialportlibrary.SerialPortManager;
 import com.tmall.ultraviewpager.UltraViewPager;
+import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,7 +92,8 @@ import java.util.List;
 /**
  * The type Serial port activity.
  */
-public class SerialPortActivity extends AppCompatActivity implements OnOpenSerialPortListener, RecyAdapter.OnItemClickListener, View.OnClickListener, HearBeatView, GetImageView, DeleteImageView {
+public class SerialPortActivity extends AppCompatActivity implements OnOpenSerialPortListener, RecyAdapter.OnItemClickListener, View.OnClickListener, HearBeatView, GetImageView,
+        DeleteImageView, MyexchangeView,ShangpinduihuanView, DelteJiFenView, UserRepairView, GetFaluiatListView {
 
     private static final String TAG = SerialPortActivity.class.getSimpleName();
     /**
@@ -106,13 +131,30 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
     private List<GetImageViewBean.ResultDataBean> mlistImage = new ArrayList<>();
     private UltraPagerAdapter adapter;
     private String adv,exc;
-
+    private String MyNotice;
+    private int myMoney,currentPoint;
+    private TextView tv_Notifiction;
+    private TextView tv_money;
+    private TextView tv_exchaneg;
+    private String exchangeID;
+    private List<MyExchangeBean.ResultDataBean> myexchanges = new ArrayList<>();
+    DownloadImageBean downloadImageBean = new DownloadImageBean();
+    List<DownloadImageBean> dowloadlist = new ArrayList<>();
+    private int myexchange;
+    private ExchangeGiftPop exchangeGiftPop;
+    private HearBeatPerenset getimage;
+    private EditText et_body;
+    private RecyclerView mRecyclerView;
+    public List<GetUserFailuatListBean.ResultDataBean> faultList = new ArrayList<>();
+    private FaultListAdapter faulustr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         horizontal();
         setContentView(R.layout.activity_serial_port);
+        L.e("dowloadlist:"+dowloadlist.size());
+
         openSerialPort();
         initView();
         initRecy();
@@ -125,12 +167,12 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
     }
 
     private void initViewPager() {
+
         ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
         //UltraPagerAdapter 绑定子view到UltraViewPager
         //   mlistImage = SaveSpList.getList(getApplicationContext(),"imageurlList");
-        adapter = new UltraPagerAdapter(datas,this);
+        adapter = new UltraPagerAdapter(dowloadlist,this);
         ultraViewPager.setAdapter(adapter);
-
 
 
 
@@ -147,6 +189,9 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
      * 描述：初始化控件
      */
     private void initView() {
+        tv_exchaneg = (TextView)findViewById(R.id.tv_exchaneg);
+        tv_money = (TextView)findViewById(R.id.tv_money);
+        tv_Notifiction = (TextView)findViewById(R.id.tv_Notifiction);
         protLinear = (LinearLayout) findViewById(R.id.protLinear);
         ultraViewPager = (UltraViewPager) findViewById(R.id.ultra_viewpager);
         img = (ImageView) findViewById(R.id.img);
@@ -233,8 +278,8 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
 //        }
 
         //获取心跳
-        HearBeatPerenset getimage = new HearBeatPerenset(this);
-        getimage.getImageView("cs201712121519", "广州白云区", "1");
+        getimage = new HearBeatPerenset(this);
+        getimage.getImageView(ZhuZhanIp.machineId, "广州白云区", "1");
 
 
     }
@@ -436,7 +481,7 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
             //通知
             case R.id.fl_layout:
                 showToast("测试中···");
-                NotionftionPop tongzhi = new NotionftionPop(this);
+                NotionftionPop tongzhi = new NotionftionPop(this,MyNotice);
                 tongzhi.showPopupWindow();
                 break;
             //充值
@@ -446,7 +491,7 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
                 break;
             //兑换礼品
             case R.id.btn_duihuan:
-                ExchangeGiftPop exchangeGiftPop = new ExchangeGiftPop(this);
+                exchangeGiftPop = new ExchangeGiftPop(this,myexchange);
                 exchangeGiftPop.showPopupWindow();
                 break;
             //故障报修
@@ -464,16 +509,10 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
                 popScreen.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 //设置显示位子
                 popScreen.showAtLocation(protLinear,Gravity.CENTER, 0, 0);
+                //初始化问题列表
+                iniRecycerPopup(view);
+                init_guzhang(view);
 
-                ImageView imgs = (ImageView) view.findViewById(R.id.img_close);
-
-
-                imgs.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        popScreen.dismiss();
-                    }
-                });
                 break;
             //用水开关
             case R.id.kaiguan:
@@ -487,6 +526,58 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
 
 
         }
+    }
+
+
+    private void iniRecycerPopup(View view) {
+        //初始化recycleView
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.mRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        //设置 mRecyclerView 的管理器
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        faulustr  = new FaultListAdapter(R.layout.faulst_item,faultList,SerialPortActivity.this);
+        mRecyclerView.setAdapter(faulustr);
+    }
+
+    /**
+     * 创建者 ：华黎
+     * 创建时间： 2017/12/27 22:19
+     * 描述：故障报修弹窗的内容
+     */
+    private void init_guzhang(View view) {
+        //打开故障弹窗获取用户提交过的那些故障列表···
+        GetFaluiatListPerenset faluiatListPerenset = new GetFaluiatListPerenset(SerialPortActivity.this);
+        faluiatListPerenset.getFaluiatList(ZhuZhanIp.machineId,"1");
+
+        ImageView imgs = (ImageView) view.findViewById(R.id.img_close);
+        imgs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popScreen.dismiss();
+            }
+        });
+        Button btn_comitt = (Button) view.findViewById(R.id.btn_comitt);
+        et_body = (EditText) view.findViewById(R.id.et_body);
+
+        btn_comitt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               String user_input_body =  et_body.getText().toString().trim();
+                if (!TextUtils.isEmpty(user_input_body)) {
+                    //故障报修请求
+                    UserRepairPerenset userRepairPerenset = new UserRepairPerenset(SerialPortActivity.this);
+                    userRepairPerenset.userRepair(ZhuZhanIp.machineId, user_input_body, "1");
+                } else {
+
+                    MyDialog.dialog("警告","您输入的内容为空！不能报修，请从新输入报修内容··谢谢！","确定","");
+                }
+
+
+
+            }
+        });
+
+
     }
 
     /**
@@ -513,6 +604,15 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
 
         HeartBeatBean heartBeatBean = (HeartBeatBean) object;
         List<String> datass = heartBeatBean.getResultData().getData();
+        HeartBeatBean.ResultDataBean.InfoBean info = heartBeatBean.getResultData().getInfo();
+        //获取余额
+        String money =  info.getBalance();
+        if (!TextUtils.isEmpty(money)) {
+            tv_money.setText(money);
+        }
+        //获取积分
+        myexchange = info.getPoint();
+        tv_exchaneg.setText(myexchange+"");
 
         for (int i = 0; i < datass.size(); i++) {
             advertisement = datass.get(i);
@@ -524,16 +624,57 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
             }
         }
 
-
         if (!TextUtils.isEmpty(adv)) {
-            showToast("advertisement不等于空");
-            //心跳获取成功请求网络图片接口
-            GetImagePerenset getimage = new GetImagePerenset(this);
-            //"cs201712121540"
-            getimage.getImageViewData("cs201712121519", adv, "1");
-        } else{
-            //这里表示程序进来·没有规定的字段所以不做网络请求 从本地保存的数据中取
+            //   dowloadlist = SaveSpList.getList(getApplicationContext(),"bendiImage");
+
+            if (dowloadlist.size() == 0) {
+
+                //心跳获取成功请求网络图片接口
+                GetImagePerenset getimage = new GetImagePerenset(this);
+                //"cs201712121540"
+                getimage.getImageViewData(ZhuZhanIp.machineId, adv, "1");
+            } else { //暂时先加上·如果·奔溃就 去掉他
+                //否则直接在这里设置adapter
+                initSetAdapter();
+                //心跳获取成功请求网络图片接口
+                GetImagePerenset getimage = new GetImagePerenset(this);
+                //"cs201712121540"
+                getimage.getImageViewData(ZhuZhanIp.machineId, adv, "1");
+            }
+
+        }else {
+            //否则直接在这里设置adapter
             initSetAdapter();
+
+        }
+
+
+
+        if (!TextUtils.isEmpty(exc)) {
+            myexchanges = SaveSpList.getList(getApplicationContext(),"exchangeList");
+            if (myexchanges == null) {
+                myexchanges = new ArrayList<>();
+                MyExchangePerenset myExchangePerenset = new MyExchangePerenset(this);
+                myExchangePerenset.getexchange(ZhuZhanIp.machineId, exc, "1");
+
+            } else {
+                for (int i = 0; i < myexchanges.size(); i++) {
+                    //获取公告通知内容
+                    MyNotice = myexchanges.get(i).getContent();
+                    // 获取余额
+                    myMoney =  myexchanges.get(i).getMoney();
+                    //获取当前积分
+                    currentPoint = myexchanges.get(i).getPoint();
+                    //获取ID
+                    exchangeID =  myexchanges.get(i).getId();
+                }
+                //设置公告内容到控件上显示
+                tv_Notifiction.setText(MyNotice);
+
+                MyExchangePerenset myExchangePerenset = new MyExchangePerenset(this);
+                myExchangePerenset.getexchange(ZhuZhanIp.machineId, exc, "1");
+            }
+
         }
 
 
@@ -549,7 +690,32 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
         showToast("心跳获取服务器请求失败了！");
         //心跳获取失败请求网络图片接口
         GetImagePerenset getimage = new GetImagePerenset(this);
-        getimage.getImageViewData("cs2017121216011","advertisement","1");
+        getimage.getImageViewData(ZhuZhanIp.machineId,"advertisement","1");
+
+
+            myexchanges = SaveSpList.getList(getApplicationContext(),"exchangeList");
+            if (myexchanges == null) {
+                myexchanges = new ArrayList<>();
+                MyExchangePerenset myExchangePerenset = new MyExchangePerenset(this);
+                myExchangePerenset.getexchange(ZhuZhanIp.machineId, exc, "1");
+
+            } else {
+                for (int i = 0; i < myexchanges.size(); i++) {
+                    //获取公告通知内容
+                    MyNotice = myexchanges.get(i).getContent();
+                    // 获取余额
+                    myMoney =  myexchanges.get(i).getMoney();
+                    //获取当前积分
+                    currentPoint = myexchanges.get(i).getPoint();
+                    //获取ID
+                    exchangeID =  myexchanges.get(i).getId();
+                }
+                //设置公告内容到控件上显示
+                tv_Notifiction.setText(MyNotice);
+            }
+
+
+
 
     }
 
@@ -563,37 +729,38 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
      * 创建时间： 2017/12/23 14:52
      * 描述：网络图片请求成功
      */
-    int a;
+
     @Override
     public void showImageRlest(Object object) {
         GetImageViewBean getimage = (GetImageViewBean) object;
         mlistImage =  getimage.getResultData();
-        L.e("转换前的集合："+mlistImage.size());
-        for (int i = 0; i < mlistImage.size(); i++) {
-            //取出图片中的url字段跟ID字段 然后网络请求
-            String url = mlistImage.get(i).getAdUrl();
-            String imgurl = ZhuZhanIp.imageurl+url;
-            String imgid = mlistImage.get(i).getId();
+        if (mlistImage == null) {
 
-            downloadImge(imgurl,imgid);
-            a = i+1;
-        }
-        L.e("a执行的次数 "+a);
-/*        datas.addAll(mlistImage);
-        recyAdapter.notifyDataSetChanged();
-        //图片接口请求成功后保存在本地sp中
-        SaveSpList.putList(getApplicationContext(),"imageurlList",mlistImage);
+        } else {
+            for (int i = 0; i < mlistImage.size(); i++) {
+                //取出图片中的url字段跟ID字段 然后网络请求
+                String url = mlistImage.get(i).getAdUrl();
+                String imgurl = ZhuZhanIp.imageurl+url;
+                String imgid = mlistImage.get(i).getId();
 
-        //这里 必须要设置第2遍pageradapter 我也不知道他这个是什么几把鬼 ·哎·真蛋疼·
-        adapter = new UltraPagerAdapter(datas,this);
-        ultraViewPager.setAdapter(adapter);
-        //这里是点击事件的
-        adapter.setOnPagerListener(new UltraPagerAdapter.OnViewPagerCallback() {
-            @Override
-            public void onPageViewColcik(int position) {
-                Toast.makeText(getApplicationContext(),"给老子出来曹尼玛的 "+position,Toast.LENGTH_SHORT).show();
+                if (dowloadlist.size() == 0) {
+                    downloadImge(imgurl,imgid);
+                } else {
+                    for (int j = 0; j < dowloadlist.size(); j++) {
+                        String dowID = dowloadlist.get(j).getAddid();
+                        if (!imgid.equals(dowID)) {
+                            continue;//表示B接口请求出来的图片不在下的本地dowloadlist集合中
+                        } else {
+                            //否则相当·表示·这张图片已经下载过了·可能没删除成功 这里可以继续调用删除图片的网络请求
+                        }
+                    }
+                }
             }
-        });*/
+        }
+
+
+
+
 
 
 
@@ -611,45 +778,51 @@ public class SerialPortActivity extends AppCompatActivity implements OnOpenSeria
         initSetAdapter();
 
 
-/*        mlistImage = SaveSpList.getList(getApplicationContext(),"imageurlList");
-        if (mlistImage != null) {
-            datas.addAll(mlistImage);
-            recyAdapter.notifyDataSetChanged();
 
-            //这里 必须要设置第2遍pageradapter 我也不知道他这个是什么几把鬼 ·哎·真蛋疼·
-            adapter = new UltraPagerAdapter(datas,this);
-            ultraViewPager.setAdapter(adapter);
-            //这里是点击事件的
-            adapter.setOnPagerListener(new UltraPagerAdapter.OnViewPagerCallback() {
-                @Override
-                public void onPageViewColcik(int position) {
-                    Toast.makeText(getApplicationContext(),"给老子出来曹尼玛的 "+position,Toast.LENGTH_SHORT).show();
-                }
-            });
-        }*/
 
     }
 
 
-/************************************************************************************************************************************/
+    /************************************************************************************************************************************/
 
 
-private void initSetAdapter() {
-    dowloadlist = SaveSpList.getList(getApplicationContext(), "bendiImage");
-    //这里 必须要设置第2遍pageradapter 我也不知道他这个是什么几把鬼 ·哎·真蛋疼·
-    adapter = new UltraPagerAdapter(dowloadlist,getApplicationContext());
-    ultraViewPager.setAdapter(adapter);
+    private void initSetAdapter() {
+        dowloadlist = SaveSpList.getList(getApplicationContext(), "bendiImage");
+        if (dowloadlist == null) {
+            dowloadlist = new ArrayList<>();
 
-    //这里设置recycerview
-    datas.addAll(dowloadlist);
-    recyAdapter.notifyDataSetChanged();
-    adapter.setOnPagerListener(new UltraPagerAdapter.OnViewPagerCallback() {
-        @Override
-        public void onPageViewColcik(int position) {
-            Toast.makeText(getApplicationContext(),"点击了图片："+position,Toast.LENGTH_SHORT).show();
+            //这里 必须要设置第2遍pageradapter 我也不知道他这个是什么几把鬼 ·哎·真蛋疼·
+            adapter = new UltraPagerAdapter(dowloadlist,getApplicationContext());
+            ultraViewPager.setAdapter(adapter);
+
+            //这里设置recycerview
+            datas.addAll(dowloadlist);
+            recyAdapter.notifyDataSetChanged();
+
+            adapter.setOnPagerListener(new UltraPagerAdapter.OnViewPagerCallback() {
+                @Override
+                public void onPageViewColcik(int position) {
+                    Toast.makeText(getApplicationContext(),"点击了图片："+position,Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            //这里 必须要设置第2遍pageradapter 我也不知道他这个是什么几把鬼 ·哎·真蛋疼·
+            adapter = new UltraPagerAdapter(dowloadlist,getApplicationContext());
+            ultraViewPager.setAdapter(adapter);
+
+            //这里设置recycerview
+            datas.addAll(dowloadlist);
+            recyAdapter.notifyDataSetChanged();
+
+            adapter.setOnPagerListener(new UltraPagerAdapter.OnViewPagerCallback() {
+                @Override
+                public void onPageViewColcik(int position) {
+                    Toast.makeText(getApplicationContext(),"点击了图片："+position,Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-    });
-}
+    }
 
     /**
      * 创建者 ：华黎
@@ -657,8 +830,7 @@ private void initSetAdapter() {
      * 描述：循环遍历 多组图片 下载（例如A B C D 四组图片 分别一张一张的下载到本地）
      */
 
-    List<DownloadImageBean> dowloadlist = new ArrayList<>();
-    DownloadImageBean downloadImageBean;
+
     private void downloadImge(String imgurl, final String imgid) {
         Glide.with(getApplicationContext())
                 .load(imgurl)
@@ -682,14 +854,8 @@ private void initSetAdapter() {
                         adapter = new UltraPagerAdapter(dowloadlist,getApplicationContext());
                         ultraViewPager.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+                        initSetAdapter();
                         L.e("转换后的集合："+dowloadlist.size());
-             /*           for (int i = 0; i < list.size(); i++) {
-                            drawableStr =  list.get(i);
-                        }
-
-                        //将图片string字符串 转成Drawable
-                        drawable = ImgZhuanHuan.byteToDrawable(drawableStr);
-                        img.setBackground(drawable);*/
 
                     }
 
@@ -710,9 +876,115 @@ private void initSetAdapter() {
     public void deletError() {
         L.e("删除测试》》》"+"删除失败");
     }
+
+
     /**********************************************************************************************************/
 
+    /*=============================下面2个回调是获取积分的回调*******************************************/
+    @Override
+    public void showExchangeSoccec(Object object) {
+        MyExchangeBean bean = (MyExchangeBean) object;
+        List<MyExchangeBean.ResultDataBean> myexchange = bean.getResultData();
+        //吧积分回调的的集合保存在本地
+        SaveSpList.putList(getApplicationContext(),"exchangeList",myexchange);
+
+        for (int i = 0; i < myexchange.size(); i++) {
+            //获取公告通知内容
+            MyNotice = myexchange.get(i).getContent();
+            // 获取余额
+            myMoney =  myexchange.get(i).getMoney();
+            //获取当前积分
+            currentPoint = myexchange.get(i).getPoint();
+            //获取ID
+            exchangeID =  myexchange.get(i).getId();
+            for (int j = 0; j < myexchanges.size(); j++) {
+                String bendi_myexchanges =  myexchanges.get(i).getId();
+                if (bendi_myexchanges.equals(exchangeID)) {
+                    //删除心跳中积分的字段
+                    DelteJiefnPersent delteJiefnPersent = new DelteJiefnPersent(this);
+                    delteJiefnPersent.deleteJfen(ZhuZhanIp.machineId,"1");
+
+                } else {
+                    //吧积分回调的的集合保存在本地
+                    SaveSpList.putList(getApplicationContext(),"exchangeList",myexchange);
+                    //设置公告内容到控件上显示
+                    tv_Notifiction.setText(MyNotice);
+
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void showExchangeErroy() {
+
+    }
 
 
 
+
+    /**********************************************************************************************************/
+    /*==================================礼品兑换那个弹窗里面的 点击积分兑换 的回调=======================================*/
+    @Override
+    public void duihuanOnSoccs(Object object) {
+        DuihuanBean duihuan = (DuihuanBean) object;
+        MyDialog.dialog("提示","恭喜您兑换成功！","确定","");
+        //隐藏礼品兑换的popupwindow
+        exchangeGiftPop.dismiss();
+        //这里从新请求心跳获取用户剩余积分
+        getimage.getImageView(ZhuZhanIp.machineId, "广州白云区", "1");
+    }
+
+    @Override
+    public void duihuanOnError() {
+
+    }
+
+
+    /*=================================================================================================*/
+    /*===============================================删除积分回调==========================================*/
+    @Override
+    public void DeleteOnsoncc(Object object) {
+
+    }
+
+    @Override
+    public void DeleteOnError() {
+
+    }
+
+    /*====================================================================================================*/
+
+    /********************************************************用户报修故障成功失败的回调***************************************/
+    @Override
+    public void repairSuccess(Object object) {
+        UserRepairBean userRepairBean = (UserRepairBean) object;
+        MyDialog.dialog("提示","恭喜您提交成功，我们将在24小时内安排人员过来为您解决！","确定","");
+
+        //用户报修故障成功后去请求服务器获取最新的故障列表数据·来呈现
+        GetFaluiatListPerenset faluiatListPerenset = new GetFaluiatListPerenset(SerialPortActivity.this);
+        faluiatListPerenset.getFaluiatList(ZhuZhanIp.machineId,"1");
+
+    }
+
+    @Override
+    public void repairError() {
+        MyDialog.dialog("警告","网络太差提交失败···请重新尝试提交···","确定","");
+    }
+
+    /****************************************************************************************************************************/
+    /****************************************获取用户报修故障后的列表 成功与失败的回调*/
+    @Override
+    public void getFaluiatOnSccos(Object object) {
+        GetUserFailuatListBean bean = (GetUserFailuatListBean) object;
+        List<GetUserFailuatListBean.ResultDataBean> failuat = bean.getResultData();
+        faulustr.setNewData(failuat);
+        faulustr.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getFaluiatOnError() {
+        MyDialog.dialog("警告","网络太差获取故障列表失败···请尝试重新打开此界面","确定","");
+    }
 }

@@ -19,4 +19,11 @@ public class ZhuZhanIp {
     * 广告图片拼接
     * */
     public static final String imageurl = "http://60.205.227.65:8080/hydrogen";
+    /*
+    * 设备号  :
+cs2017121216011
+:
+cs201712121600
+    * */
+    public static final String machineId = "cs2017121216011";
 }

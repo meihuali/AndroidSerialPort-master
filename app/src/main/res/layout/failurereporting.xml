@@ -33,18 +33,21 @@
                     android:src="@drawable/guanbi"
                     android:layout_width="17dp"
                     android:layout_height="17dp" />
+
             </RelativeLayout>
+
             <ImageView
                 android:layout_marginTop="3dp"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/baoxiu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_marginTop="10dp"
                     android:textSize="30sp"
@@ -62,78 +65,28 @@
                         android:text="@string/haoma"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                <LinearLayout
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal"
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mRecyclerView"
+                    android:layout_marginLeft="50px"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                    <TextView
-                        android:textColor="@color/txt_main"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="50dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/xiangxi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    <TextView
-                        android:gravity="center_vertical"
-                        android:textColor="@color/lvseziti"
-                        android:text="@string/chulizhuangtai"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                    <TextView
-                        android:textColor="@color/txt_main"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="50dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/xiangxi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    <TextView
-                        android:gravity="center_vertical"
-                        android:textColor="@color/lvseziti"
-                        android:text="@string/chulizhuangtai"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                    <TextView
-                        android:textColor="@color/txt_main"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="50dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/xiangxi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    <TextView
-                        android:gravity="center_vertical"
-                        android:textColor="@color/lvseziti"
-                        android:text="@string/chulizhuangtai"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    </LinearLayout>
+                    android:layout_height="140dp">
+                </android.support.v7.widget.RecyclerView>
 
                 <LinearLayout
+                    android:layout_marginTop="20px"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
                     <EditText
+                        android:id="@+id/et_body"
                         android:layout_marginLeft="50dp"
                         android:hint="     请输入您的问题"
                         android:background="@drawable/button_yuanjiao_huiseyuanjiao"
                         android:layout_width="330dp"
                         android:layout_height="match_parent" />
                     <Button
+                        android:id="@+id/btn_comitt"
                         android:layout_marginLeft="35dp"
                         android:textColor="@color/white"
                         android:textSize="20sp"

@@ -3,12 +3,13 @@
     android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="150dp"
         android:layout_height="wrap_content">
     <ImageView
+        android:id="@+id/tv_imgLiPin"
         android:scaleType="fitXY"
         android:src="@drawable/wupin"
         android:layout_width="match_parent"
@@ -24,11 +25,13 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tv_beiziName"
                     android:textColor="@color/txt_main"
                     android:text="@string/taochimakebei"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/tv_jifen"
                     android:textColor="@color/top_red"
                     android:text="@string/jifenshuliang"
                     android:layout_width="match_parent"

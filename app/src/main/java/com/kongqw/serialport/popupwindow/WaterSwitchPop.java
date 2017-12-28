@@ -137,7 +137,9 @@ public class WaterSwitchPop extends BasePopupWindow implements View.OnClickListe
                 tv_yibai.setBackgroundResource(R.drawable.button_yuanjiaokongxin_lanse);
                 tv_yibai.setTextColor(activity.getResources().getColor(R.color.lvseziti));
                 break;
+            case R.id.btn_comitt:
 
+                break;
 
         }
 

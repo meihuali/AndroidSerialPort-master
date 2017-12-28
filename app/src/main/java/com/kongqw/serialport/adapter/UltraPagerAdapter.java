@@ -54,6 +54,7 @@ public class UltraPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
+
         return datas.size();
     }
 

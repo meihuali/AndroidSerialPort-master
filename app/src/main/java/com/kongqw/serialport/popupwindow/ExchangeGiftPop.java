@@ -10,9 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.kongqw.serialport.ConfigUtils.ZhuZhanIp;
+import com.kongqw.serialport.Perenset.DuihuanshangpinPeresnt;
+import com.kongqw.serialport.Perenset.ShangPingliebiaoPerenset;
 import com.kongqw.serialport.R;
+import com.kongqw.serialport.View.ShangpinduihuanView;
+import com.kongqw.serialport.View.ShangpingliebiaoView;
 import com.kongqw.serialport.adapter.ExchangeGiftAdapter;
+import com.kongqw.serialport.entivity.DuihuanBean;
 import com.kongqw.serialport.entivity.ExchangGiftBean;
+import com.kongqw.serialport.entivity.ShangpinBean;
+import com.kongqw.serialport.utils.MyDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +35,7 @@ import razerdp.basepopup.BasePopupWindow;
  * 创建时间： 2017/12/17 0017 18:04
  * 描述：兑换礼品  ExchangeGiftPop
  */
-public class ExchangeGiftPop extends BasePopupWindow implements View.OnClickListener {
+public class ExchangeGiftPop extends BasePopupWindow implements View.OnClickListener,ShangpingliebiaoView ,ShangpinduihuanView{
 
     private View popupView;
     private Activity activity;
@@ -35,12 +43,13 @@ public class ExchangeGiftPop extends BasePopupWindow implements View.OnClickList
     private RecyclerView mRecyclerView;
     private ExchangeGiftAdapter exchangeGiftAdapter;
     private List<ExchangGiftBean> mlist = new ArrayList<>();
-    private ArrayList<ExchangGiftBean> mlist2 = new ArrayList<>();
+    private ArrayList<ShangpinBean.ResultDataBean> mlist2 = new ArrayList<>();
+    private int userjifen;
 
-
-    public ExchangeGiftPop(Activity context) {
+    public ExchangeGiftPop(Activity context,int myexchange) {
         super(context);
         this.activity = context;
+        this.userjifen = myexchange;
         bindEvent();
     }
 
@@ -105,6 +114,18 @@ public class ExchangeGiftPop extends BasePopupWindow implements View.OnClickList
                 switch (view.getId()) {
                     case R.id.tv_duihuana:
                         Toast.makeText(activity, "兑换下标为： " + i, Toast.LENGTH_SHORT).show();
+                        ShangpinBean.ResultDataBean shangpin = (ShangpinBean.ResultDataBean) baseQuickAdapter.getItem(i);
+                       String  shangpinID = shangpin.getId();
+                        //这里获取商品的积分
+                        int shangpinjifen = shangpin.getPoint();
+                        if (userjifen >= shangpinjifen) {
+                            Toast.makeText(getContext(), "用户积分大于商品积分可以兑换", Toast.LENGTH_SHORT).show();
+                            DuihuanshangpinPeresnt shangpinduihuan = new DuihuanshangpinPeresnt((ShangpinduihuanView) activity);
+                            shangpinduihuan.shangpinduihuan(ZhuZhanIp.machineId,shangpinID,"1");
+
+                        } else {
+                            MyDialog.dialog("警告","您当前的积分不够，请充值，或者联系管理员！","确定","取消");
+                        }
                         break;
                 }
             }
@@ -117,16 +138,10 @@ public class ExchangeGiftPop extends BasePopupWindow implements View.OnClickList
      * 描述：假数据
      */
     private void iniData() {
-        ExchangGiftBean giftBean = new ExchangGiftBean();
-        for (int i = 0; i < 6; i++) {
-            giftBean.setName("陶瓷马克杯");
-            giftBean.setJifen("600积分");
-            giftBean.setSelect(true);
-            mlist.add(giftBean);
-        }
-        mlist2.addAll(mlist);
-        exchangeGiftAdapter.setNewData(mlist2);
-        exchangeGiftAdapter.notifyDataSetChanged();
+        ShangPingliebiaoPerenset shangpin = new ShangPingliebiaoPerenset(this);
+        shangpin.showShangPin(ZhuZhanIp.machineId,"1");
+
+
     }
 
     @Override
@@ -139,4 +154,33 @@ public class ExchangeGiftPop extends BasePopupWindow implements View.OnClickList
         }
 
     }
+    /*++++++++++++++++++++++++++++++++下面是获取礼品的列表的 回调+++++++++++++++++++++++++++++*/
+    @Override
+    public void shangPingSocces(Object object) {
+        ShangpinBean shangpin = (ShangpinBean) object;
+        List<ShangpinBean.ResultDataBean> shangpinList = shangpin.getResultData();
+
+        mlist2.addAll(shangpinList);
+        exchangeGiftAdapter.setNewData(mlist2);
+        exchangeGiftAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void shangPingError() {
+        MyDialog.dialog("提示","获取商品列表失败，服务器挂了···","确定","取消");
+    }
+    /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+    /*===============================下面是兑换商品是否成功========================================*/
+    @Override
+    public void duihuanOnSoccs(Object object) {
+        DuihuanBean duihuan = (DuihuanBean) object;
+        MyDialog.dialog("提示","恭喜您兑换成功！","确定","");
+    }
+
+    @Override
+    public void duihuanOnError() {
+
+    }
+    /*==================================================================================================*/
+
 }
